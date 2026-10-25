@@ -1,0 +1,59 @@
+# Campus Nova: SQL Server + API .NET 8 + Angular (nginx)
+#   cp .env.example .env     (y editar las claves)
+#   docker compose up -d --build
+#   App: http://localhost:8080
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Define MSSQL_SA_PASSWORD en .env}
+      MSSQL_PID: Express
+    volumes:
+      - sqldata:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  # Contenedor de un solo uso: ejecuta backend/db/sqlserver/01..06 y termina.
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+    volumes:
+      - ./backend/db/sqlserver:/scripts:ro
+      - ./backend/db/init-db.sh:/init-db.sh:ro
+    entrypoint: ["/bin/bash", "/init-db.sh"]
+    restart: "no"
+
+  backend:
+    build: ./backend
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__CampusNova: "Server=db;Database=CampusNovaDB;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True"
+      Jwt__Key: ${JWT_KEY:?Define JWT_KEY en .env (minimo 32 caracteres)}
+      # El TLS lo termina el proxy/nube; sin esto la API redirigiria a https en bucle.
+      DisableHttpsRedirection: "true"
+      Cors__Origins: ${CORS_ORIGINS:-http://localhost:8080}
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "${APP_PORT:-8080}:80"
+    restart: unless-stopped
+
+volumes:
+  sqldata:
