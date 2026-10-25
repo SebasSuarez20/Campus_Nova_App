@@ -64,6 +64,13 @@ Arranca en `http://localhost:4200`.
 
 Todas las rutas cargan con lazy loading.
 
+### Reporte en PDF
+
+En `/pages/students` el botón **Descargar PDF** genera el reporte de estudiantes del
+programa de créditos (resumen, materias inscritas y créditos por estudiante). Respeta
+el filtro activo en la tabla y se arma en el navegador con `jspdf` y `jspdf-autotable`,
+sin pasar por el backend. El archivo se descarga como `estudiantes-AAAA-MM-DD.pdf`.
+
 ### Identidad visual
 
 Violeta `#5B3DF5` y coral `#FF7A59` sobre azul noche `#14123A`. Fuentes Sora y
