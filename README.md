@@ -47,6 +47,57 @@ los datos iniciales (institucion `900123456`, 5 profesores, 10 materias).
 La cadena de conexion esta en `ConnectionStrings:CampusNova` y `Jwt:Key` se configura con
 `dotnet user-secrets` (no se versiona).
 
+## Docker
+
+`docker-compose.yml` levanta todo el sistema con un solo comando:
+
+| Servicio | Imagen | Función |
+|---|---|---|
+| `db` | SQL Server 2022 (Express) | Base de datos, con volumen `sqldata` |
+| `db-init` | SQL Server 2022 | Un solo uso: ejecuta `backend/db/sqlserver/01..06` si la base está vacía |
+| `backend` | .NET 8 (`backend/Dockerfile`) | API en el puerto interno 8080 |
+| `frontend` | nginx (`frontend/Dockerfile`) | Sirve Angular y reenvía `/v1/api` y `/hubs` (SignalR) al backend |
+
+```bash
+cp .env.example .env        # edita MSSQL_SA_PASSWORD y JWT_KEY
+docker compose up -d --build
+```
+
+La aplicación queda en `http://localhost:8080`. Como nginx sirve el frontend y la API
+bajo el mismo origen, no hace falta tocar CORS ni las URLs del frontend de producción.
+
+```bash
+docker compose logs -f backend   # ver logs
+docker compose down              # detener (conserva los datos)
+docker compose down -v           # detener y borrar la base (se recarga desde los scripts)
+```
+
+El archivo `.env` contiene secretos y no se sube al repositorio; solo `.env.example`.
+
+### Desplegar en la nube
+
+Las imágenes son estándar, así que el mismo `docker-compose.yml` se puede correr en
+cualquier servidor o servicio que soporte contenedores:
+
+- **Una VM** (Azure, AWS EC2, DigitalOcean, etc.): instalar Docker, clonar el
+  repositorio, crear el `.env` y ejecutar `docker compose up -d --build`.
+- **Servicios de contenedores** (Azure Container Apps, AWS ECS, Google Cloud Run): subir
+  las imágenes `backend` y `frontend` a un registro (`docker compose build` y
+  `docker push`) y apuntar `ConnectionStrings__CampusNova` a una base administrada
+  (por ejemplo Azure SQL), en lugar del contenedor `db`.
+
+Antes de publicarlo:
+
+1. **HTTPS es obligatorio.** Las cookies de sesión se emiten con `Secure` y
+   `SameSite=None`, por lo que solo funcionan sobre HTTPS (en `localhost` el navegador
+   lo permite). Pon un proxy con certificado delante del contenedor `frontend`
+   (Caddy, Traefik, nginx con Let's Encrypt o el balanceador de la nube).
+2. Usa contraseñas largas y únicas en `MSSQL_SA_PASSWORD` y `JWT_KEY`, y guárdalas como
+   secretos de la plataforma, no en el repositorio.
+3. Define `CORS_ORIGINS` con tu dominio público (`https://tu-dominio.com`) si el
+   frontend se sirve desde otro origen.
+4. No expongas el puerto 1433 de SQL Server a internet; en este compose no se publica.
+
 ## Frontend
 
 ```bash

@@ -14,7 +14,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddJwtConfiguration(builder.Configuration);
 builder.Services.AddRealTime();
 builder.Services.AddConfigurationInvalidatorValidation();
-builder.Services.AddCorsConfiguration();
+builder.Services.AddCorsConfiguration(builder.Configuration);
 builder.Services.AddAuthorization();
 builder.Services.AddSignalR();
 
@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-if (!app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment() && !app.Configuration.GetValue<bool>("DisableHttpsRedirection"))
 {
     app.UseHttpsRedirection();
 }

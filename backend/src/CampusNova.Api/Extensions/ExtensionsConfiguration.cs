@@ -38,7 +38,7 @@ namespace CampusNova.Api.Extensions
         }
 
 
-        public static IServiceCollection AddCorsConfiguration(this IServiceCollection services)
+        public static IServiceCollection AddCorsConfiguration(this IServiceCollection services, IConfiguration config)
         {
 
             services.AddCors(options =>
@@ -46,7 +46,7 @@ namespace CampusNova.Api.Extensions
                 options.AddPolicy("CorsPolicy", policy =>
                 {
                     policy
-                        .WithOrigins("http://localhost:4200")
+                        .WithOrigins(config["Cors:Origins"]?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) ?? new[] { "http://localhost:4200" })
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()
