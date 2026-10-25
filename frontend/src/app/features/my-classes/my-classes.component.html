@@ -1,0 +1,61 @@
+<div class="page">
+
+  <header class="page-head">
+    <div>
+      <span class="eyebrow">Mis clases</span>
+      <h1>Con quién compartes clase</h1>
+      <p class="sub">De tus compañeros ves solo el nombre.</p>
+    </div>
+  </header>
+
+  <!-- ===================== selector de materia ===================== -->
+  <div class="tabs" role="tablist" aria-label="Mis materias">
+    @for (m of informationClasess(); track m.code) {
+      <button type="button" role="tab" class="tab"
+              [class.is-on]="selectedId() === m.materiaId" [attr.aria-selected]="selectedId() === m.materiaId"
+              (click)="elegir(m.materiaId)">
+        <span class="tab-code">{{ m.code }}</span>
+        <span class="tab-name">{{ m.name }}</span>
+        <span class="tab-count">{{ companeros(m.materiaId) }} compañeros</span>
+      </button>
+    }
+  </div>
+
+  <!-- ===================== compañeros de la clase ===================== -->
+  @if (isActiveFiltro()) {
+    <section class="card classmates">
+      <div class="peers-head">
+        <h3>Compañeros de clase</h3>
+        <span class="peers-count">{{ informationClassmates()?.length ?? 0 }}</span>
+      </div>
+
+      @if ((informationClassmates()?.length ?? 0) > 0) {
+        <ul class="peers">
+          @for (item of informationClassmates(); track item.fullName; let i = $index) {
+            <li class="peer" [style.animation-delay]="(i * 50) + 'ms'">
+              <span class="peer-avatar" aria-hidden="true">{{ iniciales(item.fullName) }}</span>
+              <span class="peer-name">{{ item.fullName }}</span>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="peers-empty">Todavía no hay compañeros en esta clase.</p>
+      }
+
+      <p class="privacy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" />
+        </svg>
+        Por privacidad, aquí solo aparece el nombre de cada compañero.
+      </p>
+    </section>
+  } @else {
+    <section class="card empty">
+      <span class="empty-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5" /><path d="M3 9.5h18M8 3v3M16 3v3" /></svg>
+      </span>
+      <h2>No has seleccionado ninguna clase</h2>
+      <p>Elige una de tus materias de arriba para ver con quién compartes clase.</p>
+    </section>
+  }
+</div>

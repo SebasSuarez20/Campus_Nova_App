@@ -1,0 +1,213 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  height: 100vh;
+  padding: 26px 18px 22px;
+  background:
+    radial-gradient(120% 60% at 0% 0%, rgba(122, 98, 255, 0.28), transparent 60%),
+    var(--navy);
+  color: #fff;
+}
+
+/* ---------------- marca ---------------- */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 6px;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--primary-bright), var(--accent));
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(122, 98, 255, 0.45);
+}
+
+.brand-mark svg { width: 23px; height: 23px; }
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.brand-sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ---------------- navegación ---------------- */
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.nav-title {
+  padding: 0 14px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 14.5px;
+  font-weight: 600;
+  transition: color 0.16s, background 0.16s;
+}
+
+.nav-item svg { width: 20px; height: 20px; flex: none; }
+
+.nav-item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.nav-item.is-active {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(122, 98, 255, 0.95), rgba(91, 61, 245, 0.95));
+  box-shadow: 0 8px 20px rgba(91, 61, 245, 0.4);
+}
+
+/* ---------------- tarjeta de créditos ---------------- */
+
+.credits-card {
+  padding: 16px;
+  border-radius: var(--r-lg);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.credits-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.credits-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.credits-num {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.credits-num small {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.credits-bar {
+  height: 8px;
+  margin: 10px 0 10px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.credits-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary-bright), var(--accent));
+}
+
+.credits-card p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ---------------- salir ---------------- */
+
+.logout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.16s, border-color 0.16s, background 0.16s;
+}
+
+.logout svg { width: 18px; height: 18px; flex: none; }
+
+.logout:hover {
+  color: #fff;
+  border-color: var(--danger);
+  background: rgba(229, 72, 77, 0.18);
+}
+
+/* ---------------- móvil: barra inferior ---------------- */
+
+@media (max-width: 860px) {
+  .sidebar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 30;
+    flex-direction: row;
+    align-items: center;
+    height: auto;
+    gap: 4px;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -8px 30px rgba(20, 18, 58, 0.25);
+  }
+
+  .brand, .nav-title, .credits-card { display: none; }
+
+  .nav { flex-direction: row; flex: 1; gap: 2px; }
+
+  .nav-item {
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    padding: 9px 4px;
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .logout { padding: 10px; border: 0; }
+  .logout span { display: none; }
+}

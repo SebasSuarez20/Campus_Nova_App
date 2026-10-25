@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>1404e189-0f72-4711-a907-42b307fc3b9d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.26" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.10" />
+
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CampusNova.Realtime\CampusNova.Realtime.csproj" />
+    <ProjectReference Include="..\CampusNova.Application\CampusNova.Application.csproj" />
+    <ProjectReference Include="..\CampusNova.Infrastructure\CampusNova.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

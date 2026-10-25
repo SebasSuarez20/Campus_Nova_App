@@ -1,0 +1,75 @@
+.panel { align-items: flex-start; }
+
+@media (min-width: 961px) {
+  .panel { align-items: center; padding-block: 40px; }
+}
+
+.panel-inner { max-width: 480px; }
+
+.form { gap: 16px; }
+
+.hero .headline { font-size: clamp(32px, 3.6vw, 46px); }
+
+.rules-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.rules-box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+  border-radius: var(--r-lg);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+}
+
+@media (max-width: 960px) {
+  .rules-box { display: none; }
+}
+
+/* ---------------- requisitos de la contraseña ---------------- */
+
+.pw-rules {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 14px;
+  margin: 0;
+  padding: 14px 16px;
+  list-style: none;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+
+.pw-rules li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: color 0.15s;
+}
+
+.pw-rules li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--dim);
+  transition: all 0.15s;
+}
+
+.pw-rules li.ok { color: var(--mint); }
+.pw-rules li.ok::before { background: var(--mint); border-color: var(--mint); }
+
+@media (max-width: 480px) {
+  .pw-rules { grid-template-columns: 1fr; }
+}

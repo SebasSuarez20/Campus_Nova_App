@@ -1,0 +1,111 @@
+# =========================================================================
+# GitIgnore estándar y optimizado para .NET (Visual Studio & VS Code)
+# Personalizado para el Backend de Campus Nova
+# =========================================================================
+
+# --- Archivos y carpetas de compilación ---
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Pp]ublish/
+
+# --- Directorios de IDEs y Editores ---
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.dbmdl
+*.jfm
+*.userprefs
+*.usertasks
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vsscc
+*.webinfo
+*.csproj.user
+*.vcxproj.user
+*.sqlproj.user
+*.asax.user
+*.datasource
+*.sln.ide
+
+# Visual Studio Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/settings.json
+
+# JetBrains Rider / ReSharper
+.idea/
+*.sln.iml
+_ReSharper*/
+
+# --- Paquetes NuGet y Dependencias ---
+*.nupkg
+**/packages/
+!**/packages/build/
+project.lock.json
+project.assets.json
+
+# --- Bases de datos y archivos locales ---
+*.mdf
+*.ldf
+*.ndf
+*.sqlite
+*.db
+
+# --- Configuración Local y Secretos (Seguridad) ---
+*.local.json
+appsettings.local.json
+appsettings.Local.json
+secrets.json
+.env
+.env.*
+!.env.example
+
+# --- Archivos del Sistema Operativo ---
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# --- Configuracion local de Claude Code ---
+.claude/

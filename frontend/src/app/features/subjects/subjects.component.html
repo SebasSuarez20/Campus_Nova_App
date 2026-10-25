@@ -1,0 +1,62 @@
+<div class="page">
+
+  <!-- ===================== encabezado ===================== -->
+  <header class="page-head">
+    <div>
+      <span class="eyebrow">Inscripción</span>
+      <h1>Elige tus materias</h1>
+      <p class="sub">10 materias · 3 créditos cada una · escoge 3 con profesores distintos.</p>
+    </div>
+  </header>
+
+  <!-- ===================== filtro por profesor ===================== -->
+  <div class="filters" role="group" aria-label="Filtrar por profesor">
+    <button type="button" class="filter" [class.is-on]="filterTeacher() === null" (click)="filtrar(null)">
+      Todos
+    </button>
+    @for (p of teachers(); track p.id) {
+      <button type="button" class="filter" [class]="'filter tono-' + p.tono" (click)="this.filtrar(p.id)">
+        <span class="filter-dot"></span>{{ p.nombre }}
+      </button>
+    }
+  </div>
+
+  <!-- ===================== catálogo ===================== -->
+  <section class="grid">
+    @for (m of visibles(); track m.code) {
+      <article class="card subject" >
+        <span class="subject-code">{{ m.code }}</span>
+        <h3>{{ m.fullName }}</h3>
+        <p class="desc">{{ m.description }}</p>
+
+        <div class="prof">
+          <span class="prof-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4.5 21a7.5 7.5 0 0 1 15 0" /></svg>
+          </span>
+          <span class="prof-text">
+            <span class="prof-label">Profesor (a)de</span>
+            <span class="prof-name">{{ m.fullName }}</span>
+          </span>
+        </div>
+
+        <div class="meta">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7L12 3Z" /></svg>
+            {{ m.credits }} créditos
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20a6.5 6.5 0 0 1 13 0" /></svg>
+            {{ m.totalStudents }} inscritos
+          </span>
+        </div>
+ 
+        <button type="button" class="enroll" [class.enrolled]="m.result === 'Completado'" [disabled]="m.result === 'Bloqueado'" (click)="saveSubject(m.subjectId,m.result)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+           {{m.result === 'Completado' ? 'Inscrito' : 'Inscribirse'}}
+          <svg class="enroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" /></svg>
+        </button>
+      </article>
+    }
+  </section>
+
+</div>

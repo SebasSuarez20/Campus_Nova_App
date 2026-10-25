@@ -1,0 +1,26 @@
+# Dependencias y compilados
+node_modules/
+bin/
+obj/
+dist/
+
+# IDEs y editores
+.vs/
+.vscode/
+.idea/
+
+# Configuracion local de Claude Code
+.claude/
+
+# Angular cache
+.angular/
+
+# Secretos y config local
+secrets.json
+appsettings.Local.json
+appsettings.local.json
+.env
+
+# Sistema
+.DS_Store
+Thumbs.db

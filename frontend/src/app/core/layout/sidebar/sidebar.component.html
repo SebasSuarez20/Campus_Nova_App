@@ -1,0 +1,67 @@
+<aside class="sidebar">
+
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 9.5 12 4l10 5.5-10 5.5L2 9.5Z" />
+        <path d="M6 12.2V17c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.8" />
+      </svg>
+    </div>
+    <div class="brand-text">
+      <span class="brand-name">Campus Nova</span>
+      <span class="brand-sub">Registro de estudiantes</span>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Navegación principal">
+    <span class="nav-title">Menú</span>
+
+    <a class="nav-item" routerLink="/pages/subjects" routerLinkActive="is-active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z" />
+        <path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5M9 8h7M9 12h5" />
+      </svg>
+      <span>Materias</span>
+    </a>
+
+    <a class="nav-item" routerLink="/pages/my-classes" routerLinkActive="is-active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4.5" width="18" height="16" rx="2.5" />
+        <path d="M3 9.5h18M8 3v3M16 3v3M8 14h3" />
+      </svg>
+      <span>Mis clases</span>
+    </a>
+
+    <a class="nav-item" routerLink="/pages/students" routerLinkActive="is-active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="9" cy="8" r="3.5" /><path d="M2.5 20a6.5 6.5 0 0 1 13 0" />
+        <path d="M16 5.5a3.5 3.5 0 0 1 0 7M18 20a6.5 6.5 0 0 0-2-4.7" />
+      </svg>
+      <span>Estudiantes</span>
+    </a>
+  </nav>
+
+  <div class="credits-card">
+    <div class="credits-top">
+      <span class="credits-label">Tus créditos</span>
+      <span class="credits-num">9<small>/9</small></span>
+    </div>
+    <div class="credits-bar" role="progressbar" aria-valuemin="0" aria-valuemax="9" aria-valuenow="9" aria-label="Créditos inscritos">
+      <span style="width: 100%"></span>
+    </div>
+    <p>3 materias × 3 créditos. Cupo completo.</p>
+  </div>
+
+  <button class="logout" type="button" (click)="logout()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <path d="M16 17l5-5-5-5M21 12H9" />
+    </svg>
+    <span>Cerrar sesión</span>
+  </button>
+</aside>

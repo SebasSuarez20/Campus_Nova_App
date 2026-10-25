@@ -1,0 +1,269 @@
+<div class="page">
+
+  <!-- ===================== encabezado ===================== -->
+  <header class="page-head">
+    <div>
+      <span class="eyebrow">Directorio</span>
+      <h1>Estudiantes</h1>
+      <p class="sub">
+        @if (busqueda()) {
+          {{ filtrados().length }} de {{ estudiantes().length }} estudiantes.
+        } @else {
+          {{ estudiantes().length }} estudiantes inscritos en el programa de créditos.
+        }
+      </p>
+    </div>
+
+    <button class="btn-primary" type="button" (click)="descargarPdf()" [disabled]="filtrados().length === 0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v12M7 10l5 5 5-5M4 20h16" />
+      </svg>
+      Descargar PDF
+    </button>
+  </header>
+
+  <!-- ===================== buscador ===================== -->
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+         stroke-linecap="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
+    </svg>
+    <input type="search" placeholder="Buscar por nombre, documento, correo o materia…"
+           aria-label="Buscar estudiante" [value]="busqueda()" (input)="buscar($event)">
+  </div>
+
+  <!-- ===================== tabla ===================== -->
+  <div class="card table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Estudiante</th>
+          <th>Documento</th>
+          <th>Materias inscritas</th>
+          <th class="th-num">Créditos</th>
+          <th><span class="sr-only">Acciones</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (e of filtrados(); track e.idStudent) {
+          <tr [class.is-me]="e.isMine">
+            <td>
+              <div class="persona">
+                <span class="avatar" aria-hidden="true">{{ service.iniciales(e.fullName) }}</span>
+                <span class="persona-txt">
+                  <span class="persona-nombre">
+                    {{ e.fullName }}
+                    @if (e.isMine) {
+                      <span class="tag-yo">Tú</span>
+                    }
+                  </span>
+                  <span class="persona-mail">{{ e.email }}</span>
+                </span>
+              </div>
+            </td>
+            <td class="num">{{ e.identification }}</td>
+            <td>
+              <div class="chips">
+                @for (materia of service.materiasDe(e); track materia; let i = $index) {
+                  <span class="chip" [class]="'chip ' + service.tonoDe(i)">
+                    <span class="chip-dot"></span>{{ materia }}
+                  </span>
+                }
+              </div>
+            </td>
+            <td class="th-num"><b>{{ e.credits }}</b></td>
+            <td>
+              <div class="acciones">
+                @if (e.isMine) {
+                  <button class="icon-btn" type="button" (click)="abrirPanel('editar', e)"
+                          [attr.aria-label]="'Editar mi registro'" title="Editar mi registro">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M4 20h4l10-10-4-4L4 16v4z" /><path d="m13.5 6.5 4 4" />
+                    </svg>
+                  </button>
+                  <button class="icon-btn icon-danger" type="button" (click)="abrirBaja(e)"
+                          aria-label="Eliminar mi registro" title="Eliminar mi registro">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13M10 11v6M14 11v6" />
+                    </svg>
+                  </button>
+                } @else {
+                  <button class="icon-btn" type="button" (click)="abrirPanel('ver', e)"
+                          [attr.aria-label]="'Ver registro de ' + e.fullName" title="Ver registro">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" />
+                    </svg>
+                  </button>
+                }
+              </div>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td class="sin-resultados" colspan="5">
+              @if (busqueda()) {
+                No encontramos estudiantes con "{{ busqueda() }}".
+              } @else {
+                Todavía no hay estudiantes registrados.
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== panel de alta, edición y consulta ===================== -->
+@if (panelAbierto()) {
+  <div class="overlay" (click)="cerrarPanel()"></div>
+
+  <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <header class="drawer-head">
+      <div>
+        <span class="eyebrow">
+          @switch (modo()) {
+            @case ('editar') { Editar }
+            @default { Consulta }
+          }
+        </span>
+        <h2 id="drawer-title">
+          @switch (modo()) {
+            @case ('editar') { Mis datos }
+            @default { {{ seleccionado()?.fullName }} }
+          }
+        </h2>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Cerrar" (click)="cerrarPanel()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+             stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </header>
+
+    <form class="drawer-form" [formGroup]="form" (ngSubmit)="guardar()">
+
+      <div class="row">
+        <div class="field">
+          <label for="nombre">Nombres</label>
+          <div class="control" [class.control-error]="invalido('firstName')">
+            <input id="nombre" type="text" placeholder="Camila" formControlName="firstName">
+          </div>
+          @if (invalido('firstName')) {
+            <span class="field-error">Escribe tu nombre.</span>
+          }
+        </div>
+
+        <div class="field">
+          <label for="apellido">Apellidos</label>
+          <div class="control" [class.control-error]="invalido('lastName')">
+            <input id="apellido" type="text" placeholder="Torres" formControlName="lastName">
+          </div>
+          @if (invalido('lastName')) {
+            <span class="field-error">Escribe tu apellido.</span>
+          }
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="correo">Correo</label>
+        <div class="control" [class.control-error]="invalido('email')">
+          <input id="correo" type="email" placeholder="camila@correo.com" formControlName="email">
+        </div>
+        @if (invalido('email')) {
+          <span class="field-error">Escribe un correo válido.</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="documento">Documento</label>
+        <div class="control" [class.control-error]="invalido('identification')">
+          <input id="documento" type="text" inputmode="numeric" placeholder="1020304050" formControlName="identification">
+        </div>
+        @if (invalido('identification')) {
+          <span class="field-error">El documento debe tener solo números.</span>
+        }
+      </div>
+
+        <div class="divider"><span>Materias inscritas</span></div>
+
+        <div class="chips chips-col">
+          @for (materia of service.materiasDe(seleccionado()); track materia; let i = $index) {
+            <span class="chip chip-lg" [class]="'chip chip-lg ' + service.tonoDe(i)">
+              <span class="chip-dot"></span>{{ materia }}
+              <small>3 créditos</small>
+            </span>
+          }
+        </div>
+
+      @if (modo() !== 'ver') {
+        <div class="divider">
+          <span>{{ modo() === 'editar' ? 'Cambiar contraseña' : 'Contraseña' }}</span>
+        </div>
+
+        @if (modo() === 'editar') {
+          <p class="hint">Déjalas vacías para conservar la contraseña actual.</p>
+        }
+
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <div class="control" [class.control-error]="invalido('password')">
+            <input id="password" type="password" placeholder="Mínimo 8 caracteres" formControlName="password">
+          </div>
+          @if (invalido('password')) {
+            <span class="field-error">Usa 8 o más caracteres, con mayúscula, minúscula, número y símbolo.</span>
+          }
+        </div>
+
+        <div class="field">
+          <label for="passwordConfirm">Confirmar contraseña</label>
+          <div class="control" [class.control-error]="noCoinciden()">
+            <input id="passwordConfirm" type="password" placeholder="Repite la contraseña" formControlName="passwordConfirm">
+          </div>
+          @if (noCoinciden()) {
+            <span class="field-error">Las contraseñas no coinciden.</span>
+          }
+        </div>
+      }
+
+      <footer class="drawer-foot">
+        <button class="btn-ghost" type="button" (click)="cerrarPanel()">
+          {{ modo() === 'ver' ? 'Cerrar' : 'Cancelar' }}
+        </button>
+        @if (modo() !== 'ver') {
+          <button class="btn-primary" type="submit">
+            {{ modo() === 'editar' ? 'Guardar cambios' : 'Registrar estudiante' }}
+          </button>
+        }
+      </footer>
+    </form>
+  </aside>
+}
+
+<!-- ===================== confirmación de eliminación ===================== -->
+@if (modalBajaAbierto()) {
+  <div class="overlay" (click)="cerrarBaja()"></div>
+
+  <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="modal-title">
+    <span class="modal-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 8v5M12 17h.01" /><path d="M10.3 3.9 2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
+      </svg>
+    </span>
+    <h2 id="modal-title">¿Eliminar tu registro?</h2>
+    <p>
+      Saldrás del programa de créditos y se liberarán tus 3 materias.
+      Esta acción no se puede deshacer.
+    </p>
+    <div class="modal-foot">
+      <button class="btn-ghost" type="button" (click)="cerrarBaja()">Cancelar</button>
+      <button class="btn-danger" type="button" (click)="confirmarBaja()">Sí, eliminar</button>
+    </div>
+  </div>
+}

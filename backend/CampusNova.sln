@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.11819.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DD5DF19F-4D63-4D9B-A6E5-E2225AD42713}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusNova.Api", "src\CampusNova.Api\CampusNova.Api.csproj", "{A3CC8ED4-1AC4-4708-9BC1-1057CA8D2A7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusNova.Application", "src\CampusNova.Application\CampusNova.Application.csproj", "{A3445DBF-483F-4D51-BC2B-4A3D880F82AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusNova.Domain", "src\CampusNova.Domain\CampusNova.Domain.csproj", "{0364989E-3A22-4668-80BA-F29F27636F7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusNova.Infrastructure", "src\CampusNova.Infrastructure\CampusNova.Infrastructure.csproj", "{65ACFE93-107C-4627-BA94-FB398C2C837D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusNova.Realtime", "src\CampusNova.Realtime\CampusNova.Realtime.csproj", "{A50DC161-E12F-2B9F-292A-DBB6511E1A4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3CC8ED4-1AC4-4708-9BC1-1057CA8D2A7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CC8ED4-1AC4-4708-9BC1-1057CA8D2A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CC8ED4-1AC4-4708-9BC1-1057CA8D2A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CC8ED4-1AC4-4708-9BC1-1057CA8D2A7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3445DBF-483F-4D51-BC2B-4A3D880F82AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3445DBF-483F-4D51-BC2B-4A3D880F82AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3445DBF-483F-4D51-BC2B-4A3D880F82AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3445DBF-483F-4D51-BC2B-4A3D880F82AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0364989E-3A22-4668-80BA-F29F27636F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0364989E-3A22-4668-80BA-F29F27636F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0364989E-3A22-4668-80BA-F29F27636F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0364989E-3A22-4668-80BA-F29F27636F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65ACFE93-107C-4627-BA94-FB398C2C837D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65ACFE93-107C-4627-BA94-FB398C2C837D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65ACFE93-107C-4627-BA94-FB398C2C837D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65ACFE93-107C-4627-BA94-FB398C2C837D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A50DC161-E12F-2B9F-292A-DBB6511E1A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A50DC161-E12F-2B9F-292A-DBB6511E1A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A50DC161-E12F-2B9F-292A-DBB6511E1A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A50DC161-E12F-2B9F-292A-DBB6511E1A4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A3CC8ED4-1AC4-4708-9BC1-1057CA8D2A7E} = {DD5DF19F-4D63-4D9B-A6E5-E2225AD42713}
+		{A3445DBF-483F-4D51-BC2B-4A3D880F82AD} = {DD5DF19F-4D63-4D9B-A6E5-E2225AD42713}
+		{0364989E-3A22-4668-80BA-F29F27636F7A} = {DD5DF19F-4D63-4D9B-A6E5-E2225AD42713}
+		{65ACFE93-107C-4627-BA94-FB398C2C837D} = {DD5DF19F-4D63-4D9B-A6E5-E2225AD42713}
+		{A50DC161-E12F-2B9F-292A-DBB6511E1A4E} = {DD5DF19F-4D63-4D9B-A6E5-E2225AD42713}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D9C69C20-FABA-43F9-9E11-B3764113975A}
+	EndGlobalSection
+EndGlobal
